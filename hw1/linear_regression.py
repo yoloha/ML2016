@@ -34,8 +34,10 @@ for i in range(1,label.size,1): # starts from 1 because label[0] is already pars
 b = 20
 w = np.zeros((18,9))
 it_max = 100000 # iterations
-rate = 0.001 # learning rate (fixed)
+rate = 0.1 # learning rate (fixed)
 lam = 1 # lambda for regularization
+ada_w = np.zeros((18,9))
+ada_b = 0
 for it in range(0,it_max,1):
 	sum_sq_err = 0 # sum of squared errors
 	w_grad = np.zeros((18,9))
@@ -52,9 +54,10 @@ for it in range(0,it_max,1):
 		# Regularization
 		w_grad = w_grad + 2*lam*w
 		b_grad = b_grad + 2*lam*b
-	ada = np.sqrt(np.sum(w_grad**2))
-	w = w - rate*w_grad/ada
-	b = b - rate*b_grad/ada
+	ada_w = np.sqrt(ada_w**2 + w_grad**2)
+	ada_b = np.sqrt(ada_b**2 + b_grad**2)
+	w = w - rate*w_grad/(ada_w+0.001)
+	b = b - rate*b_grad/(ada_b+0.001)
 	print "[",it,"/",it_max,"]\t",sum_sq_err
 print err
 #-------------------Test-------------------
