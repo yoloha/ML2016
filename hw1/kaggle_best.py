@@ -96,7 +96,7 @@ for i in range(0,4320,18): # starts from 1 because label[0] is already parsed ab
     	pred = 0.0
     est.append(pred)
 #-------------------Output-------------------
-f = open('linear_regression.csv','w')
+f = open('kaggle_best.csv','w')
 f.write("id,value\n")
 for i in range (0,240,1):
     f.write("id_"+str(i)+","+str(est[i])+"\n")
