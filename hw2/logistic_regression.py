@@ -23,7 +23,7 @@ w0 = 1
 w1_mat = np.ones((57,1))
 it_max = 100000 # iterations
 rate = 0.1 # learning rate (fixed)
-lam = 50 # lambda for regularization
+lam = 0 # lambda for regularization
 ada_w0 = 0
 ada_w1 = np.zeros((57,1))
 eps = 1e-6
@@ -40,7 +40,7 @@ for it in range(it_max):
 		est_mat[est_mat<0.5] = 0
 		print "[",it,"/",it_max,"]\t error = ",np.sum(Y_mat != est_mat)/4001.0
 	# Gradient Descent
-	w0_grad = -w0 * np.sum(err_mat)
+	w0_grad = - np.sum(err_mat)
 	w1_grad = -M_mat.T * err_mat # linear weights
 	# Regularization
 	w1_grad = w1_grad + 2*lam*np.array(w1_mat)
