@@ -55,5 +55,3 @@ f.write(str(b)+"\n")
 for i in range (57):
     f.write(str(np.sum(W[i]))+"\n")
 f.close()
-def sigmoid(z):
-    return np.exp(-np.logaddexp(0, -z))
