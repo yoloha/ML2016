@@ -1,6 +1,5 @@
 import sys
 import numpy as np
-#-------------------Train-------------------
 f = open(sys.argv[1],'r')
 temp = f.read().splitlines()
 raw=[]
@@ -16,7 +15,6 @@ Y = Y.astype(np.int)
 for i in range(57):
 	M[:,i] = (M[:,i] - np.mean(M[:,i]))/np.std(M[:,i]);
 M_mat = np.matrix(M)
-#M_mat = np.insert(M_mat,0,values=0,axis=1)
 Y_mat = np.matrix(Y).T
 b = 1
 W = np.ones((57,1))
