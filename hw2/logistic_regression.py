@@ -19,40 +19,41 @@ for i in range(57):
 M_mat = np.matrix(M)
 #M_mat = np.insert(M_mat,0,values=0,axis=1)
 Y_mat = np.matrix(Y).T
-w0 = 1
-w1_mat = np.ones((57,1))
-it_max = 100000 # iterations
+b = 1
+W = np.ones((57,1))
+it_max = 10000 # iterations
 rate = 0.1 # learning rate (fixed)
 lam = 0 # lambda for regularization
-ada_w0 = 0
+ada_b = 0
 ada_w1 = np.zeros((57,1))
 eps = 1e-6
-w0_grad = 0
-w1_grad = np.zeros((57,1))
-
+db = 0
+dW = np.zeros((57,1))
 for it in range(it_max):
-	z_mat = M_mat * w1_mat + w0
+	z_mat = M_mat * W + b
 	sig_mat = 1 / (1 + np.power(np.e,-z_mat))
 	err_mat = Y_mat - sig_mat;
-	if it%10000 == 0:
+	if it%1000 == 0:
 		est_mat = sig_mat
 		est_mat[est_mat>=0.5] = 1
 		est_mat[est_mat<0.5] = 0
-		print "[",it,"/",it_max,"]\t error = ",np.sum(Y_mat != est_mat)/4001.0
+		print "[%5d"%it,"/",it_max,"] loss = %12.5f"%np.sum(-err_mat),"  error = %.3f"%(np.sum(Y_mat != est_mat)/4001.0)
 	# Gradient Descent
-	w0_grad = - np.sum(err_mat)
-	w1_grad = -M_mat.T * err_mat # linear weights
+	db = -1.0 * np.sum(err_mat)
+	dW = -M_mat.T * err_mat # linear weights
 	# Regularization
-	w1_grad = w1_grad + 2*lam*np.array(w1_mat)
+	dW = dW + 2*lam*np.array(W)
 	# Adagrad
-	ada_w0 = np.sqrt(np.square(ada_w0) + np.square(w0_grad))
-	ada_w1 = np.sqrt(np.square(ada_w1) + np.square(w1_grad))
+	ada_b = np.sqrt(np.square(ada_b) + np.square(db))
+	ada_w1 = np.sqrt(np.square(ada_w1) + np.square(dW))
 	# Update Step
-	w0 = w0 - rate * w0_grad / (ada_w0 + eps)
-	w1_mat = w1_mat - rate * w1_grad / (ada_w1 + eps)
+	b = b - rate * db / (ada_b + eps)
+	W = W - rate * dW / (ada_w1 + eps)
 #-------------------Output-------------------
 f = open(sys.argv[2],'w')
-f.write(str(w0)+"\n")
+f.write(str(b)+"\n")
 for i in range (57):
-    f.write(str(np.sum(w1_mat[i]))+"\n")
+    f.write(str(np.sum(W[i]))+"\n")
 f.close()
+def sigmoid(z):
+    return np.exp(-np.logaddexp(0, -z))
