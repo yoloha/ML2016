@@ -12,10 +12,9 @@ M = raw[:,1:-1]# 1st col to the 2nd col from the back
 Y = raw[:,-1]# last col is the answer
 M = M.astype(np.float)
 Y = Y.astype(np.int)
-# Standardization of M
+# Standardization of M_mat
 for i in range(57):
 	M[:,i] = (M[:,i] - np.mean(M[:,i]))/np.std(M[:,i]);
-# data is now in shape (4001,58)
 M_mat = np.matrix(M)
 #M_mat = np.insert(M_mat,0,values=0,axis=1)
 Y_mat = np.matrix(Y).T
