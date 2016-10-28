@@ -21,9 +21,9 @@ M_mat = np.matrix(M)
 Y_mat = np.matrix(Y).T
 b = 1
 W = np.ones((57,1))
-it_max = 10000 # iterations
+it_max = 50000 # iterations
 rate = 0.1 # learning rate (fixed)
-lam = 0 # lambda for regularization
+lam = 0.01 # lambda for regularization
 ada_b = 0
 ada_w1 = np.zeros((57,1))
 eps = 1e-6
@@ -33,7 +33,7 @@ for it in range(it_max):
 	z_mat = M_mat * W + b
 	sig_mat = 1 / (1 + np.power(np.e,-z_mat))
 	err_mat = Y_mat - sig_mat;
-	if it%1000 == 0:
+	if it%1000 == 0 or it == it_max-1:
 		est_mat = sig_mat
 		est_mat[est_mat>=0.5] = 1
 		est_mat[est_mat<0.5] = 0
