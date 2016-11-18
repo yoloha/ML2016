@@ -1,2 +1,12 @@
 The bash script has KERAS_BACKEND set as "theano"
 and device is set as "gpu"
+
+To train a new model:
+	bash train.sh data/ model
+To test a new model:
+	bash test.sh data/ model prediction.csv
+	
+
+To test using trained model:
+	bash test.sh data/ trained_model prediction.csv
+
