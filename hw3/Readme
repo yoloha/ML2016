@@ -1,2 +1,0 @@
-The bash script has KERAS_BACKEND set as "theano"
-and device is set as "gpu"
