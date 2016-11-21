@@ -6,7 +6,7 @@ import sys
 import numpy as np
 import pickle
 # load test data
-dir1 = sys.argv[1] + '/test.p'
+dir1 = sys.argv[1] + 'test.p'
 test = pickle.load(open(dir1,'rb'))
 test = np.array(test['data'])
 X  = np.zeros((test.shape[0],3,32,32))

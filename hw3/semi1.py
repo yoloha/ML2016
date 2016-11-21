@@ -12,7 +12,7 @@ import pickle
 
 
 print "Loading labeled data..."
-dir1 = sys.argv[1] + '/all_label.p'
+dir1 = sys.argv[1] + 'all_label.p'
 all_label = pickle.load(open(dir1,'rb'))
 X  = np.zeros((5000,3,32,32))
 Y  = np.zeros((5000,1))
@@ -24,7 +24,7 @@ X = X.astype('float32')
 X /= 255
 
 print "Loading unlabeled data..."
-dir2 = sys.argv[1] + '/all_unlabel.p'
+dir2 = sys.argv[1] + 'all_unlabel.p'
 all_unlabel = pickle.load(open(dir2,'rb'))
 X2  = np.zeros((45000,3,32,32))
 Y2  = np.zeros((45000,1))
@@ -35,7 +35,7 @@ X2 /= 255
 
 
 print "Loading test data..."
-dir2 = sys.argv[1] + '/test.p'
+dir2 = sys.argv[1] + 'test.p'
 test = pickle.load(open(dir2,'rb'))
 X3  = np.zeros((10000,3,32,32))
 Y3  = np.zeros((10000,1))
