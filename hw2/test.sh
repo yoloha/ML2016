@@ -1,3 +1,3 @@
 #!/bin/bash
-python test.py $1 $2 $3
+python NN_test.py $1 $2 $3
 

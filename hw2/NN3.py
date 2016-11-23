@@ -135,15 +135,15 @@ for i in range(57):
 # Best (11,5,3), 0.1, 4, 0.05991
 hid = (11,5,3)
 rate = 0.1
-lam = 3
-it_max = 10000
+lam = 4
+it_max = 20000
 
 M1 = M[0:3800,:]
 M2 = M[3800:,:]
 Y1 = Y[0:3800]
 Y2 = Y[3800:]
 
-
+"""
 model = build_model(X=M1, Y=Y1, hid_sizes=hid, rate=rate, lam=lam, it_max=it_max)
 print "----------------------------------------------"
 est = predict(model, M1)
@@ -168,6 +168,7 @@ print "\tV2 Validation Error = %.5f" %V_err2
 print "=============================================="
 print "      Average Training Error = %.5f" %((T_err1+T_err2)/2)
 print "    Average Validation Error = %.5f" %((V_err1+V_err2)/2)
+"""
 model = build_model(X=M, Y=Y, hid_sizes=hid, rate=rate, lam=lam, it_max=it_max)
 
 #-------------------Output-------------------
