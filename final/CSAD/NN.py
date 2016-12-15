@@ -1,4 +1,3 @@
-from sklearn.model_selection import StratifiedKFold
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
@@ -26,6 +25,7 @@ X = data_tr[:,:-1]
 Y = data_tr[:,-1]
 X_test = data_te
 
+
 #----- Standardization of features -----
 for i in range(X.shape[1]):
 	if np.std(X[:,i]) != 0:
@@ -34,28 +34,10 @@ for i in range(X_test.shape[1]):
 	if np.std(X_test[:,i]) != 0:
 		X_test[:,i] = (X_test[:,i] - np.mean(X_test[:,i]))/np.std(X_test[:,i]);
 
-"""
-#----- Cross Validation Split -----
-skf = StratifiedKFold(n_splits=5, shuffle=True)
-for train_index, test_index in skf.split(X, Y):
-	X_train, X_test = X[train_index], X[test_index]
-	Y_train, Y_test = Y[train_index], Y[test_index]
-
-	#----- Define Model -----
-	clf = MLPClassifier(solver='adam', alpha=1e-5, early_stopping=True, verbose=True,
-					hidden_layer_sizes=(50, 20, 10, 5, 2), random_state=1)
-	#----- Train -----
-	clf.fit(X_train, Y_train)
-	Y_pred = clf.predict(X_test)
-	print accuracy_score(Y_test, Y_pred)
-"""
-
 
 clf = MLPClassifier(solver='adam', alpha=1e-5, early_stopping=True, verbose=True,
-					hidden_layer_sizes=(50, 20, 10, 5, 2), random_state=1)
+					hidden_layer_sizes=(100, 50, 20, 10, 5, 2), random_state=1)
 clf.fit(X, Y)
-
-
 
 Y_pred = clf.predict(X_test)
 
