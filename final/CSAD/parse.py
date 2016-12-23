@@ -1,5 +1,7 @@
 import sys
 import numpy as np
+import pandas
+
 # Read training data
 with open('train') as f:
     raw = f.read().splitlines()
@@ -50,6 +52,10 @@ for i in str_list:
 print mismatch
 
 
+
+df = pandas.DataFrame(data_tr, index=range(data_tr.shape[0]), columns=range(data_tr.shape[1]))
+df2 = df.drop_duplicates()
+data_tr = df2.as_matrix()
 
 
 
