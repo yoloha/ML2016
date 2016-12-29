@@ -1,4 +1,3 @@
-import pandas as pd
 fw = open('clicks_train_doc.csv', 'wb')
 f_train = open('clicks_train.csv', 'r')
 f_doc = open('events_document.csv','r')
