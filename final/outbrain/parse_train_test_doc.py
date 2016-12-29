@@ -5,6 +5,7 @@ f_doc = open('events_document.csv','r')
 f_train.readline()
 f_doc.readline()
 display_id = -1
+fw.write("display_id,ad_id,document_id,clicked\n")
 while True:
 	line_train = f_train.readline()
 	if not line_train: break
@@ -24,6 +25,7 @@ fw = open('clicks_test_doc.csv', 'wb')
 f_test = open('clicks_test.csv', 'r')
 # Skip header
 f_test.readline()
+fw.write("display_id,ad_id,document_id\n")
 while True:
 	line_test = f_test.readline()
 	if not line_test: break
