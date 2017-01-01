@@ -31,7 +31,7 @@ X_test = data_te
 #----- Standardization of features -----
 X_total = np.concatenate((X, X_test), axis=0)
 for i in range(X.shape[1]):
-	if np.std(X[:,i]) != 0:
+	if np.std(X_total[:,i]) != 0:
 		X[:,i] = (X[:,i] - np.mean(X_total[:,i]))/np.std(X_total[:,i]);
 		X_test[:,i] = (X_test[:,i] - np.mean(X_total[:,i]))/np.std(X_total[:,i]);
 
