@@ -5,7 +5,7 @@ import sys
 import numpy as np
 
 #----- Read Data -----
-with open('train_p') as f:
+with open('train_p_nodup') as f:
     raw = f.read().splitlines()
 data_tr = []
 for line in raw:
@@ -21,25 +21,29 @@ for line in raw:
 data_te = np.array(data_te)
 data_te = data_te.astype(float)
 
+
 X = data_tr[:,:-1]
 Y = data_tr[:,-1]
+
+print X.shape
+print Y.shape
 X_test = data_te
-
-
 #----- Standardization of features -----
+X_total = np.concatenate((X, X_test), axis=0)
 for i in range(X.shape[1]):
 	if np.std(X[:,i]) != 0:
-		X[:,i] = (X[:,i] - np.mean(X[:,i]))/np.std(X[:,i]);
-for i in range(X_test.shape[1]):
-	if np.std(X_test[:,i]) != 0:
-		X_test[:,i] = (X_test[:,i] - np.mean(X_test[:,i]))/np.std(X_test[:,i]);
+		X[:,i] = (X[:,i] - np.mean(X_total[:,i]))/np.std(X_total[:,i]);
+		X_test[:,i] = (X_test[:,i] - np.mean(X_total[:,i]))/np.std(X_total[:,i]);
 
 
-clf = MLPClassifier(solver='adam', alpha=1e-5, early_stopping=True, verbose=True,
-					hidden_layer_sizes=(100, 50, 20, 10, 5, 2), random_state=1)
+clf = MLPClassifier(solver='adam', early_stopping=True, verbose=True,
+					hidden_layer_sizes=(5, 3), random_state=1)
 clf.fit(X, Y)
 
 Y_pred = clf.predict(X_test)
+print [np.sum(Y_pred==0), np.sum(Y_pred==1), np.sum(Y_pred==2), np.sum(Y_pred==3), np.sum(Y_pred==4)]
+# best: 179122, 418220, 26, 1075, 8336
+# approx: <174570, 432209, ...
 
 f = open('pred', 'w')
 f.write('id,label\n')

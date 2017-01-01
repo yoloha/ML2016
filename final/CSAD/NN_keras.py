@@ -9,7 +9,7 @@ import sys
 import numpy as np
 
 #----- Read Data -----
-with open('train_p') as f:
+with open('train_p_nodup') as f:
     raw = f.read().splitlines()
 data_tr = []
 for line in raw:
@@ -33,36 +33,27 @@ print X.shape
 print Y.shape
 X_test = data_te
 #----- Standardization of features -----
+X_total = np.concatenate((X, X_test), axis=0)
 for i in range(X.shape[1]):
 	if np.std(X[:,i]) != 0:
-		X[:,i] = (X[:,i] - np.mean(X[:,i]))/np.std(X[:,i]);
-for i in range(X_test.shape[1]):
-	if np.std(X_test[:,i]) != 0:
-		X_test[:,i] = (X_test[:,i] - np.mean(X_test[:,i]))/np.std(X_test[:,i]);
+		X[:,i] = (X[:,i] - np.mean(X_total[:,i]))/np.std(X_total[:,i]);
+		X_test[:,i] = (X_test[:,i] - np.mean(X_total[:,i]))/np.std(X_total[:,i]);
 
 #----- Define Model -----
 def build_model(): 
 	model = Sequential()
-	model.add(Dense(512, input_dim=X.shape[1]))
+	model.add(Dense(64, input_dim=X.shape[1]))
 	model.add(BatchNormalization())
 	model.add(Activation('relu'))
 	model.add(Dropout(0.5))
-	model.add(Dense(512))
+	model.add(Dense(32))
 	model.add(BatchNormalization())
 	model.add(Activation('relu'))
 	model.add(Dropout(0.5))
-	model.add(Dense(512))
+	model.add(Dense(16))
 	model.add(BatchNormalization())
 	model.add(Activation('relu'))
-	model.add(Dropout(0.5))
-	model.add(Dense(512))
-	model.add(BatchNormalization())
-	model.add(Activation('relu'))
-	model.add(Dropout(0.5))
-	model.add(Dense(512))
-	model.add(BatchNormalization())
-	model.add(Activation('relu'))
-	model.add(Dropout(0.5))
+	model.add(Dropout(0.3))
 	model.add(Dense(5))
 	model.add(BatchNormalization())
 	model.add(Activation('softmax'))
@@ -73,13 +64,12 @@ def build_model():
 	return model
 """
 #----- K-fold cross validation -----
-kfold = StratifiedShuffleSplit(n_splits=10, test_size=0.5, random_state=0)
+kfold = StratifiedShuffleSplit(n_splits=5, test_size=0.5, random_state=0)
 cvscores = []
 for train, test in kfold.split(X, Y):
 	model = build_model()
 	es_cb = EarlyStopping(monitor='val_loss', patience=0, verbose=0, mode='auto')
 	model.fit(X[train], Y[train], batch_size=1000, nb_epoch=5, verbose=1, validation_data=(X[test], Y[test]), callbacks=[es_cb])
-
 	scores = model.evaluate(X[test], Y[test], verbose=0)
 	print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 	cvscores.append(scores[1] * 100)
@@ -90,9 +80,11 @@ model = build_model()
 model.fit(X, Y, batch_size=1000, nb_epoch=5, verbose=1)
 probs = model.predict(X_test, verbose=0)
 Y_pred = np.argmax(probs, axis=1)
+print [np.sum(Y_pred==0), np.sum(Y_pred==1), np.sum(Y_pred==2), np.sum(Y_pred==3), np.sum(Y_pred==4)]
+# best: 179122, 418220, 26, 1075, 8336
+# approx: <174570, 432209, ...
 
 f = open('pred', 'w')
 f.write('id,label\n')
 for i in range(len(Y_pred)):
 	f.write(str(i+1) + ',' + str(int(Y_pred[i])) + '\n')
-
