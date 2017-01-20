@@ -51,19 +51,19 @@ for i in str_list:
 			mismatch += 1
 print mismatch
 
-"""
+
 # Remove Duplicate rows from training data
 # this somehow seems to deprecate the testing results of Neural network 
 df = pandas.DataFrame(data_tr, index=range(data_tr.shape[0]), columns=range(data_tr.shape[1]))
 df2 = df.drop_duplicates()
 data_tr = df2.as_matrix()
-"""
+
 
 
 # Output parsed files
 data_tr = data_tr.astype(str)
 data_te = data_te.astype(str)
-f = open('train_p', 'w')
+f = open('train_p_nodup', 'w')
 for i in range(data_tr.shape[0]):
 	f.write(','.join(data_tr[i,:]) + '\n')
 
