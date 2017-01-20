@@ -11,7 +11,7 @@ Instructions:
 	2. $ mkdir data
 
 	3. Place "test.in", "train", "training_attack_types.txt" in "final/data/"
-	   which could be downloaded from < https://inclass.kaggle.com/c/ml2016-cyber-security-attack-defender/data >
+	   download link: < https://inclass.kaggle.com/c/ml2016-cyber-security-attack-defender/data >
 
 	4. $ cd src
 
