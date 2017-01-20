@@ -1,6 +1,5 @@
 import sys
 import numpy as np
-import pandas
 from sklearn.preprocessing import OneHotEncoder
 #----- Read Data -----
 with open('../data/train_p_nodup') as f:
