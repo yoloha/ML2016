@@ -15,8 +15,8 @@ Instructions:
 
 	4. $ cd src
 
-	5. $ python parse.py
-	   Make sure pandas is installed
+	5. (Make sure pandas is installed)
+	   $ python parse.py
 
 	6.(a) To reproduce the Kaggle #1 results:
 		$ python ents.py
@@ -41,8 +41,9 @@ Instructions:
 	      Output file would be "final/data/train2_p_nodup"
 
 	6.(f) To perform ANOVA f-test feature analysis on dummy coded features
+	      (Make sure matplotlib is installed)
 		$ python feature_analysis.py
-	      Make sure matplotlib is installed
+	      
 
 
 
