@@ -1,7 +1,4 @@
-from sklearn.model_selection import StratifiedKFold
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
-
 import sys
 import numpy as np
 

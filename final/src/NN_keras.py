@@ -2,8 +2,6 @@ from keras.models import Sequential, model_from_json
 from keras.layers import Dense, Dropout, Activation, BatchNormalization
 from keras.optimizers import SGD, Adam
 from keras.callbacks import EarlyStopping
-from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.metrics import accuracy_score
 
 import sys
 import numpy as np
@@ -74,27 +72,14 @@ def build_model():
 	adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 	model.compile(loss='sparse_categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 	return model
-"""
-#----- K-fold cross validation -----
-kfold = StratifiedShuffleSplit(n_splits=5, test_size=0.5, random_state=0)
-cvscores = []
-for train, test in kfold.split(X, Y):
-	model = build_model()
-	es_cb = EarlyStopping(monitor='val_loss', patience=0, verbose=0, mode='auto')
-	model.fit(X[train], Y[train], batch_size=1000, nb_epoch=5, verbose=1, validation_data=(X[test], Y[test]), callbacks=[es_cb])
-	scores = model.evaluate(X[test], Y[test], verbose=0)
-	print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
-	cvscores.append(scores[1] * 100)
-print("%.2f%% (+/- %.2f%%)" % (np.mean(cvscores), np.std(cvscores)))
-"""
+
 #----- Using the whole set of data to do final prediction -----
 model = build_model()
 model.fit(X, Y, batch_size=1000, nb_epoch=5, verbose=1)
 probs = model.predict(X_test, verbose=0)
 Y_pred = np.argmax(probs, axis=1)
 print [np.sum(Y_pred==0), np.sum(Y_pred==1), np.sum(Y_pred==2), np.sum(Y_pred==3), np.sum(Y_pred==4)]
-# best: 179122, 418220, 26, 1075, 8336
-# approx: <174570, 432209, ...
+
 
 f = open('../data/pred_NN', 'w')
 f.write('id,label\n')
