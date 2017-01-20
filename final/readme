@@ -1,0 +1,46 @@
+This directory contains the source codes of the contest 
+               "ML2016 Cyber Security Attack Defender" 
+< https://inclass.kaggle.com/c/ml2016-cyber-security-attack-defender >
+
+Team Name: NTU_r05942042_R20? Daikin R32 is the new trend! A___________A
+Rank: 1
+
+Instructions:
+	1. Make sure you're under the directory "final/"
+
+	2. $ mkdir data
+
+	3. Place "test.in", "train", "training_attack_types.txt" in "final/data/"
+	   which could be downloaded from < https://inclass.kaggle.com/c/ml2016-cyber-security-attack-defender/data >
+
+	4. $ cd src
+
+	5. $ python parse.py
+
+	6.(a) To reproduce the Kaggle #1 results:
+		$ python ents.py
+	      Output files would be "final/pred_ents"
+
+	6.(b) To try out the NN implementation of this task (quite crappy):
+		$ python NN_sklearn.py
+			or
+		$ python NN_keras.py
+	      Output file would be "final/pred_NN"
+
+	6.(c) To try out the Decision tree(DT) implementation of this task (decent yet still poor)
+		$ python DT.py
+	      Output file would be "final/pred_DT"
+
+	6.(d) To try out the random forest(RF) implementation of this task (not bad)
+		$ python forest.py
+	      Output file would be "final/pred_forest"
+
+	6.(e) To generate one-hot coded data format (not used in Kaggle #1 submission)
+		$ python parse_onehot.py
+	      Output file would be "final/data/train2_p_nodup"
+
+	6.(f) To perform ANOVA f-test feature analysis on dummy coded features
+		$ python feature_analysis.py
+
+
+
