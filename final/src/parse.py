@@ -3,7 +3,7 @@ import numpy as np
 import pandas
 
 # Read training data
-with open('train') as f:
+with open('../data/train') as f:
     raw = f.read().splitlines()
 data_tr = []
 for line in raw:
@@ -11,14 +11,14 @@ for line in raw:
 data_tr = np.array(data_tr)
 for i in range(data_tr.shape[0]):
     data_tr[i,-1] = data_tr[i,-1].replace('.','')
-with open('training_attack_types.txt') as f:
+with open('../data/training_attack_types.txt') as f:
     raw = f.read().splitlines()
 type_map = [['normal', 0]]
 for line in raw:
     type_map.append(line.split())
 
 # Read Testing data
-with open('test.in') as f:
+with open('../data/test.in') as f:
     raw = f.read().splitlines()
 data_te = []
 for line in raw:
@@ -51,23 +51,23 @@ for i in str_list:
 			mismatch += 1
 print mismatch
 
-"""
+
 # Remove Duplicate rows from training data
 # this somehow seems to deprecate the testing results of Neural network 
 df = pandas.DataFrame(data_tr, index=range(data_tr.shape[0]), columns=range(data_tr.shape[1]))
 df2 = df.drop_duplicates()
 data_tr = df2.as_matrix()
-"""
+
 
 
 # Output parsed files
 data_tr = data_tr.astype(str)
 data_te = data_te.astype(str)
-f = open('train_p', 'w')
+f = open('../data/train_p_nodup', 'w')
 for i in range(data_tr.shape[0]):
 	f.write(','.join(data_tr[i,:]) + '\n')
 
-f = open('test_p', 'w')
+f = open('../data/test_p', 'w')
 for i in range(data_te.shape[0]):
 	f.write(','.join(data_te[i,:]) + '\n')
 

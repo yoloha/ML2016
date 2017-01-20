@@ -6,7 +6,7 @@ import sys
 import numpy as np
 
 #----- Read Data -----
-with open('train_p') as f:
+with open('../data/train_p') as f:
     raw = f.read().splitlines()
 data_tr = []
 for line in raw:
@@ -14,7 +14,7 @@ for line in raw:
 data_tr = np.array(data_tr)
 data_tr = data_tr.astype(float)
 
-with open('test_p') as f:
+with open('../data/test_p') as f:
     raw = f.read().splitlines()
 data_te = []
 for line in raw:
@@ -60,7 +60,7 @@ print [np.sum(Y_pred==0), np.sum(Y_pred==1), np.sum(Y_pred==2), np.sum(Y_pred==3
 # best: 179122, 418220, 26, 1075, 8336
 # approx: <174570, 432209, ...
 
-f = open('pred_DT', 'w')
+f = open('../pred_DT', 'w')
 f.write('id,label\n')
 for i in range(len(Y_pred)):
 	f.write(str(i+1) + ',' + str(int(Y_pred[i])) + '\n')

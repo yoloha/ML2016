@@ -3,7 +3,7 @@ import numpy as np
 import pandas
 from sklearn.preprocessing import OneHotEncoder
 #----- Read Data -----
-with open('train_p_nodup') as f:
+with open('../data/train_p_nodup') as f:
     raw = f.read().splitlines()
 data_tr = []
 for line in raw:
@@ -11,7 +11,7 @@ for line in raw:
 data_tr = np.array(data_tr)
 data_tr = data_tr.astype(float)
 
-with open('test_p') as f:
+with open('../data/test_p') as f:
     raw = f.read().splitlines()
 data_te = []
 for line in raw:
@@ -41,11 +41,11 @@ print data_tr.shape
 # Output parsed files
 data_tr = data_tr.astype(str)
 data_te = data_te.astype(str)
-f = open('train2_p_nodup', 'w')
+f = open('../data/train2_p_nodup', 'w')
 for i in range(data_tr.shape[0]):
 	f.write(','.join(data_tr[i,:]) + '\n')
 
-f = open('test2_p', 'w')
+f = open('../data/test2_p', 'w')
 for i in range(data_te.shape[0]):
 	f.write(','.join(data_te[i,:]) + '\n')
 

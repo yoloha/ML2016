@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.feature_selection import SelectPercentile, f_classif
 from numpy import *
 #----- Read Data -----
-with open('train2_p_nodup') as f:
+with open('../data/train_p_nodup') as f:
     raw = f.read().splitlines()
 data_tr = []
 for line in raw:
